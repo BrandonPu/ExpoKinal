@@ -80,19 +80,28 @@ public class MenuFacturaController implements Initializable {
             stage.menuPrincipalView();
         } else if(event.getSource() == btnGuardar){
             if(tfFacturaId.getText().equals("")){
-                /*if(){
-                    
-                }*/
-                agregarFactura();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                vaciarDatos();
-                cargarDatos();
-                cmbFactura.setItems(listarFactura());
+                if(cmbEmpleadoId.getValue() != null && cmbClienteId.getValue() != null){
+                    agregarFactura();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    vaciarDatos();
+                    cargarDatos();
+                    cmbFactura.setItems(listarFactura());
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    cmbEmpleadoId.requestFocus();
+                    return;
+                }
             } else{
                 if(!cmbEmpleadoId.getItems().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
-                        editarFactura();
-                        cargarDatos();
+                        if(cmbEmpleadoId.getValue() != null && cmbClienteId.getValue() != null){
+                            editarFactura();
+                            cargarDatos();
+                        }else{
+                            SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                            cmbEmpleadoId.requestFocus();
+                            return;
+                        }
                     }
                 }
             }
@@ -101,11 +110,17 @@ public class MenuFacturaController implements Initializable {
             
         } else if(event.getSource() == btnGuardarDF){
             if(tfDetalleFacturaId.getText().equals("")){
+                if(cmbFactura.getValue() != null  && cmbProducto.getValue() != null){
                     agregarDetalleFacturaDF();
                     SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                     //vaciarDatosDF();
                     cargarDatosDF();
-                    cargarDatos();
+                    cargarDatos();   
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    cmbFactura.requestFocus();
+                    return;
+                }
                 }else{
                     //editarDetalleFactura();
                     cargarDatosDF();

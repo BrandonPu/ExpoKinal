@@ -20,12 +20,12 @@
       </ImageView>
       <TextField fx:id="tfCompraId" alignment="CENTER" editable="false" layoutX="1220.0" layoutY="119.0" prefHeight="35.0" prefWidth="196.0" promptText="Compra Id (no poner nada)" style="-fx-background-radius: 10;" />
       <TextField fx:id="tfTotalCompra" layoutX="950.0" layoutY="119.0" prefHeight="35.0" prefWidth="234.0" style="-fx-background-radius: 10;" />
-      <TextField fx:id="tfFechaCompra" alignment="CENTER" editable="false" layoutX="680.0" layoutY="119.0" prefHeight="35.0" prefWidth="234.0" promptText="Se pone automatico la Fecha" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfFechaCompra" alignment="CENTER" editable="false" layoutX="737.0" layoutY="119.0" prefHeight="35.0" prefWidth="165.0" promptText="Se pone automatico la Fecha" style="-fx-background-radius: 10;" />
       <TextField fx:id="tfDetalleCompraId" alignment="CENTER" editable="false" layoutX="1156.0" layoutY="325.0" prefHeight="35.0" prefWidth="280.0" promptText="DetalleCompra Id (no poner nada)" style="-fx-background-radius: 10;" />
       <TextField fx:id="tfCantidadCompra" layoutX="1156.0" layoutY="415.0" prefHeight="35.0" prefWidth="280.0" style="-fx-background-radius: 10;" />
       <ComboBox fx:id="cmbCompraId" layoutX="1185.0" layoutY="629.0" prefHeight="35.0" prefWidth="250.0" />
       <ComboBox fx:id="cmbProductoId" layoutX="1185.0" layoutY="520.0" prefHeight="35.0" prefWidth="250.0" />
-      <TableView fx:id="tblDetalleCompras" layoutX="419.0" layoutY="239.0" prefHeight="400.0" prefWidth="700.0">
+      <TableView fx:id="tblDetalleCompras" layoutX="419.0" layoutY="239.0" onMouseClicked="#cargarDatosEditarDC" prefHeight="400.0" prefWidth="700.0">
         <columns>
           <TableColumn fx:id="colDetalleCompraId" minWidth="120.79998779296875" prefWidth="120.79998779296875" text="DetalleCompra Id" />
           <TableColumn fx:id="colCantidadCompra" minWidth="149.0" prefWidth="150.4000244140625" text="Cantidad Compra" />
@@ -33,7 +33,7 @@
             <TableColumn fx:id="colCompra" minWidth="149.0" prefWidth="256.79998779296875" text="Compra" />
         </columns>
       </TableView>
-      <TableView fx:id="tblCompras" layoutX="45.0" layoutY="239.0" prefHeight="400.0" prefWidth="325.0">
+      <TableView fx:id="tblCompras" layoutX="45.0" layoutY="239.0" onMouseClicked="#cargarDatosEditarC" prefHeight="400.0" prefWidth="325.0">
         <columns>
           <TableColumn fx:id="colCompraId" minWidth="70.39999103546143" prefWidth="90.39999103546143" text="Compra Id" />
           <TableColumn fx:id="colFechaCompra" minWidth="116.0" prefWidth="116.0" text="Fecha Compra" />
@@ -60,7 +60,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnGuardarDC" layoutX="1158.0" layoutY="690.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Guardar">
+      <Button fx:id="btnGuardarDC" layoutX="1185.0" layoutY="690.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="87.0" style="-fx-background-radius: 10;" text="+">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
@@ -75,10 +75,25 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Text layoutX="1131.0" layoutY="752.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Para DetalleCompras" wrappingWidth="164.80002441406236">
+      <Text layoutX="1146.0" layoutY="752.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Para DetalleCompras" wrappingWidth="164.80002441406236">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
+      <Text fill="#924792" layoutX="45.0" layoutY="221.0" stroke="#f50000" strokeType="OUTSIDE" strokeWidth="0.0" text="Tabla DetalleCompra" textAlignment="CENTER" wrappingWidth="280.0000000000002">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text fill="#924792" layoutX="419.0" layoutY="221.0" stroke="#f50000" strokeType="OUTSIDE" strokeWidth="0.0" text="Tabla Compras" textAlignment="CENTER" wrappingWidth="234.39999999999986">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnVerFactura" layoutX="419.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="122.0" style="-fx-background-radius: 10;" text="Ver Compra">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

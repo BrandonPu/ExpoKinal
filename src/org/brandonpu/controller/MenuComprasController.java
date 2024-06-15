@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -71,27 +72,46 @@ public class MenuComprasController implements Initializable {
             stage.menuPrincipalView();
         } else if(event.getSource() == btnGuardar){
             if(tfCompraId.getText().equals("")){
-                agregarCompra();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                //vaciarDatos();
-                cargarDatosDC();
-                cargarDatos();
-                cmbCompraId.setItems(listarCompra());
+                if(!tfTotalCompra.getText().equals("")){
+                    agregarCompra();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    //vaciarDatos();
+                    cargarDatosDC();
+                    cargarDatos();
+                    cmbCompraId.setItems(listarCompra());
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfTotalCompra.requestFocus();
+                    return;
+                }
             } else{
-                /*if(!cmbEmpleadoId.getItems().equals("")){
+                if(!tfCompraId.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
-                        editarFactura();
-                        cargarDatos();
+                        if(!tfTotalCompra.getText().equals("")){
+                            editarCompra();
+                            cargarDatosDC();
+                            cargarDatos();
+                        } else{
+                            SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                            tfTotalCompra.requestFocus();
+                            return;
+                        }
                     }
-                }*/
+                }
             }
         } else if(event.getSource() == btnGuardarDC){
              if(tfDetalleCompraId.getText().equals("")){
-                agregarDetalleCompra();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                //vaciarDatos();
-                cargarDatos();
-                cargarDatosDC();
+                 if(!tfCantidadCompra.getText().equals("") && cmbCompraId.getValue() != null && cmbProductoId.getValue() != null){
+                    agregarDetalleCompra();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    //vaciarDatos();
+                    cargarDatos();
+                    cargarDatosDC();
+                 }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfCantidadCompra.requestFocus();
+                    return;
+                 }
             } else{
                 /*if(!cmbEmpleadoId.getItems().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
@@ -100,6 +120,10 @@ public class MenuComprasController implements Initializable {
                     }
                 }*/
             }
+        } else if(event.getSource() == btnVaciar){
+            vaciarCompras();
+        } else if(event.getSource() == btnVaciarDC){
+            vaciarDetalleCompras();
         }
     }
     
@@ -117,6 +141,64 @@ public class MenuComprasController implements Initializable {
         colCantidadCompra.setCellValueFactory(new PropertyValueFactory<DetalleCompra, Integer>("cantidadCompra"));
         colProducto.setCellValueFactory(new PropertyValueFactory<DetalleCompra, String>("producto"));
         colCompra.setCellValueFactory(new PropertyValueFactory<DetalleCompra, String>("compra"));
+    }
+    
+    public void vaciarCompras(){
+        tfCompraId.clear();
+        tfTotalCompra.clear();
+        tfFechaCompra.clear();
+    }
+    
+    public void vaciarDetalleCompras(){
+        tfDetalleCompraId.clear();
+        tfCantidadCompra.clear();
+        cmbCompraId.getSelectionModel().clearSelection();
+        cmbProductoId.getSelectionModel().clearSelection();
+    }
+    
+    public void cargarDatosEditarC(){
+        Compra c = (Compra)tblCompras.getSelectionModel().getSelectedItem();
+        if(c != null){
+            tfCompraId.setText(Integer.toString(c.getCompraId()));
+            tfTotalCompra.setText(String.valueOf(c.getTotalCompra()));
+            tfFechaCompra.setText(c.getFechaCompra());
+        }
+    }
+    
+    public void cargarDatosEditarDC(){
+        DetalleCompra DC = (DetalleCompra)tblDetalleCompras.getSelectionModel().getSelectedItem();
+        if(DC != null){
+            tfDetalleCompraId.setText(Integer.toString(DC.getDetalleCompraId()));
+            tfCantidadCompra.setText(Integer.toString(DC.getCantidadCompra()));
+            cmbCompraId.getSelectionModel().select(obtenerIndexCompra());
+            cmbProductoId.getSelectionModel().select(obtenerIndexProducto());
+        }
+    }
+    
+    public int obtenerIndexProducto(){
+        int index = 0;
+        for(int i = 0 ; i < cmbProductoId.getItems().size() ; i++){
+            String productoCmb = cmbProductoId.getItems().get(i).toString();
+            String productoTbl = ((DetalleCompra)tblDetalleCompras.getSelectionModel().getSelectedItem()).getProducto();
+            if(productoCmb.equals(productoTbl)){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+    
+    public int obtenerIndexCompra(){
+        int index2 = 0;
+        for(int i  = 0 ; i < cmbCompraId.getItems().size() ; i++){
+            String compraCmb = cmbCompraId.getItems().get(i).toString();
+            String compraTbl = ((DetalleCompra)tblDetalleCompras.getSelectionModel().getSelectedItem()).getCompra();
+            if(compraCmb.equals(compraTbl)){
+                index2 = i;
+                break;
+            }
+        }
+        return index2;
     }
     
     public void agregarCompra(){
@@ -290,6 +372,31 @@ public class MenuComprasController implements Initializable {
         }
         
         return FXCollections.observableList(productos);
+    }
+    
+    public void editarCompra(){
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_editarCompra(?,?,?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(tfCompraId.getText()));
+            statement.setString(2, tfFechaCompra.getText());
+            statement.setDouble(3, Double.parseDouble(tfTotalCompra.getText()));
+            statement.execute();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(conexion != null){
+                conexion.close();
+                }
+                if(statement != null){
+                    statement.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
     
     public Main getStage() {
