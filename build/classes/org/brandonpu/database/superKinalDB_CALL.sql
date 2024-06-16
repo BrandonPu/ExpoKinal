@@ -30,6 +30,13 @@ INSERT INTO CategoriaProductos (nombreCategoria, descripcionCategoria) VALUES
 ('Hogar', 'Artículos para el hogar y decoración'),
 ('Deportes', 'Equipamiento y ropa deportiva');
 
+INSERT INTO Clientes (nombre, apellido, telefono, direccion, nit) VALUES
+('Juan', 'Pérez', '123456789', 'Calle Falsa 123, Ciudad X', '1234567890123'),
+('María', 'García', '234567890', 'Avenida Siempre Viva 456, Ciudad Y', '2345678901234'),
+('Luis', 'Martínez', '345678901', 'Boulevard de los Sueños Rotos 789, Ciudad Z', '3456789012345'),
+('Ana', 'López', '456789012', 'Callejón Sin Salida 101, Ciudad W', '4567890123456'),
+('Carlos', 'Rodríguez', '567890123', 'Avenida del Sol 202, Ciudad V', '5678901234567');
+
 INSERT INTO Compras (fechaCompra, totalCompra) VALUES
 ('2024-01-15', 1500.50),
 ('2024-02-20', 2300.00),
@@ -50,13 +57,6 @@ INSERT INTO Promociones (precioPromocion, descripcionPromocion, fechaInicio, fec
 (15.00, 'Promoción en Camiseta Deportiva', '2024-06-05', '2024-06-20', 3),
 (40.00, 'Descuento en Juego de Sábanas', '2024-06-15', '2024-07-15', 4),
 (400.00, 'Oferta en Bicicleta de Montaña', '2024-06-20', '2024-07-20', 5);
-
-INSERT INTO Clientes (nombre, apellido, telefono, direccion, nit) VALUES
-('Juan', 'Pérez', '123456789', 'Calle Falsa 123, Ciudad X', '1234567890123'),
-('María', 'García', '234567890', 'Avenida Siempre Viva 456, Ciudad Y', '2345678901234'),
-('Luis', 'Martínez', '345678901', 'Boulevard de los Sueños Rotos 789, Ciudad Z', '3456789012345'),
-('Ana', 'López', '456789012', 'Callejón Sin Salida 101, Ciudad W', '4567890123456'),
-('Carlos', 'Rodríguez', '567890123', 'Avenida del Sol 202, Ciudad V', '5678901234567');
 
 -- INSERT INTO Productos (nombreProducto, descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor, precioCompra, imagenProducto, distribuidorId, categoriaProductosId) VALUES
 -- ('Televisor 50"', 'Televisor de 50 pulgadas, 4K UHD', 50, 700.00, 650.00, 500.00, NULL, 1, 1),
