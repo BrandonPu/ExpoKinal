@@ -34,7 +34,6 @@
         </rowConstraints>
          <children>
             <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Guardar" />
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Cancelar" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

@@ -46,9 +46,9 @@ public class Main extends Application {
         Image icon = new Image("/org/brandonpu/image/icon.png");
         stage.setTitle("Super Kinal APP");
         stage.getIcons().add(icon);
-        menuPrincipalView();
+        //menuPrincipalView();
         //formUsuarioView();  //Si no se tiene datos de los usuarios ponerlo del aqui
-        //loginView();
+        loginView();
         stage.show();
     }
     
